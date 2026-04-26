@@ -20,14 +20,8 @@ jobs:
         with:
           github_user_name: sarva-20
           outputs: |
-            dist/github-snake.svg
-            dist/github-snake-dark.svg?palette=github-dark
-          snake_head_color: "#e85c2c"
-          background_color: "#f9f9f7"
-          dot_color: "#fcd5c0"
-          dot_color_dark: "#f4956a"
-          dot_color_darker: "#e85c2c"
-          dot_color_darkest: "#c44a1f"
+            dist/github-snake.svg?color_snake=%23e85c2c&color_dots=%23efefeb,%23fcd5c0,%23f4956a,%23e85c2c,%23c44a1f
+            dist/github-snake-dark.svg?color_snake=%23e85c2c&color_dots=%2316101d,%2339231b,%23773520,%23e85c2c,%23c44a1f
 
       - name: Publish to output branch
         run: |
