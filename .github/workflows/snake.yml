@@ -11,10 +11,8 @@ permissions:
 jobs:
   generate:
     runs-on: ubuntu-latest
-    env:
-      FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
         with:
           fetch-depth: 0
       
@@ -29,17 +27,23 @@ jobs:
         run: |
           set -euo pipefail
 
-          cp -r dist /tmp/snake-dist
+          test -d dist
 
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
 
-          git checkout --orphan output
-          git rm -rf . || true
+          if git ls-remote --exit-code --heads origin output >/dev/null 2>&1; then
+            git fetch origin output:output
+            git worktree add /tmp/output-branch output
+          else
+            git worktree add -b output /tmp/output-branch
+          fi
 
-          find . -mindepth 1 -maxdepth 1 ! -name .git -exec rm -rf {} +
-          cp -r /tmp/snake-dist/* .
-          touch .nojekyll
+          rm -rf /tmp/output-branch/* /tmp/output-branch/.[!.]* /tmp/output-branch/..?* || true
+          cp -r dist/* /tmp/output-branch/
+          touch /tmp/output-branch/.nojekyll
+
+          cd /tmp/output-branch
 
           git add .
           git commit -m "Update snake animation" || echo "No changes to commit"
