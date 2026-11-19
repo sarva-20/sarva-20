@@ -4,7 +4,7 @@
 
 ### Building thoughtful software at the intersection of AI, language, and developer tools.
 
-**1,431 contributions in the last year · 1,352 commits · 43 pull requests merged · 162 days in a row**
+**1,431 contributions in the last year · 1,352 commits · 43 pull requests merged · 162 active days**
 
 </div>
 
